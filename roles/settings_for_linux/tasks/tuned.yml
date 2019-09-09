@@ -1,0 +1,20 @@
+#####
+#
+# settings_for_linux/tasks/tuned.yml
+#
+#####
+
+---
+- name: Create tuned directory
+  file:
+    path: /etc/tuned/hortonworks/
+    state: directory
+
+- name: Upload the tuned profile
+  template:
+    src: tuned.conf.j2
+    dest: /etc/tuned/hortonworks/tuned.conf
+    mode: 0755
+
+- name: Activate the tuned profile
+  shell: tuned-adm profile hortonworks

@@ -1,0 +1,9 @@
+#####
+#
+# hosts/dev/group_vars/all.yml
+#
+#####
+
+---
+ssh_remote_user: ubuntu
+ssh_private_key_file: "秘密鍵の配置を指定"
