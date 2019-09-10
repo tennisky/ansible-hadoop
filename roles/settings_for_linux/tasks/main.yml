@@ -19,7 +19,7 @@
 
 - name: Change password of root
   user:
-    name: "root"
+    name: root
     password: "{{ root_password | password_hash('sha512') }}"
 
 - name: Install packages
@@ -27,7 +27,7 @@
     name: "{{ item }}"
     update_cache: yes
     state: present
-  with_items: "{{ packages | join(',')}}"
+  with_items: "{{ packages }}"
 
 #- name: Install Java
 #  include_tasks: java.yml
@@ -46,13 +46,13 @@
 
 - name: Add mappings to /etc/hosts
   lineinfile:
-    path: /etc/hosts
+    dest: /etc/hosts
     regexp: "^{{ hostvars[item]['ansible_'~hostvars[item].ansible_default_ipv4.alias | regex_replace('-','_')]['ipv4']['address'] }}.*"
     line: "{{ hostvars[item]['ansible_'~hostvars[item].ansible_default_ipv4.alias | regex_replace('-','_')]['ipv4']['address'] }} {{ hostvars[item]['ansible_nodename'] }}"
     insertafter: "^127..*$"
     state: present
   with_items:
-    - "{{ ansible_play_hosts_all|sort(reverse=True) }}"
+    - "{{ ansible_play_hosts|sort(reverse=True) }}"
 #  when: not external_dns
 
 - name: Make sure /etc/security/limits.d exists
@@ -63,7 +63,7 @@
 
 - name: Set nofile and nproc limits
   blockinfile:
-    path: /etc/security/limits.d/99-hadoop.conf
+    dest: /etc/security/limits.d/99-hadoop.conf
     create: yes
     mode: 0644
     block: |
