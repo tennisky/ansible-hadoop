@@ -5,6 +5,10 @@
 #####
 
 ---
+  - name: Include vars of all.yml
+  include_vars:
+    file: all.yml
+
 - name: Loading OS types
   include_vars: "{{ item }}"
   with_first_found:
@@ -102,7 +106,7 @@
 - name: Disable selinux
   selinux:
     state: disabled
-  when: ansible_os_family|lower == "redhat" and ansible_distribution|lower != "amazon" and is_vm_docker_containers != "yes"
+#  when: ansible_os_family|lower == "redhat" and ansible_distribution|lower != "amazon" and is_vm_docker_containers != "yes"
 
 - name: Set timezone to "{{ timezone }}"
   timezone:
