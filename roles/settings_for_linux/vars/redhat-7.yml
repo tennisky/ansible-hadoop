@@ -16,6 +16,7 @@ packages:
   - openssl-devel           # openssl-devel recommended for Ranger KMS
   - libtirpc-devel          # libtirpc required by HDP 2.6+
   - libselinux-python       # libselinux-python required by Ansible
+  - postgresql-jdbc*        # postgresql-jdbc required by some applications
 
 openjdk_package: java-1.8.0-openjdk-devel
 

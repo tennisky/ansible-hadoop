@@ -26,6 +26,18 @@
     name: root
     password: "{{ root_password | password_hash('sha512') }}"
 
+- name: Permit ssh as root user
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    state: present
+    regexp: '^#PermitRootLogin'
+    line: PermitRootLogin yes
+
+- name: Add hostname to /etc/sysconfig/network
+  lineinfile:
+    path: /etc/sysconfig/network
+    line: HOSTNAME={{ ansible_fqdn }}
+
 - name: Install packages
   package:
     name: "{{ item }}"
@@ -36,6 +48,12 @@
 #- name: Install Java
 #  include_tasks: java.yml
 #  when: java != "embedded"
+
+- name: Change mode of postgresql-jdbc.jar
+  file:
+    path: /usr/share/java/postgresql-jdbc.jar
+    state: file
+    mode: '0644'
 
 - name: Make sure the NTP service is started
   service:
@@ -107,6 +125,11 @@
   selinux:
     state: disabled
 #  when: ansible_os_family|lower == "redhat" and ansible_distribution|lower != "amazon" and is_vm_docker_containers != "yes"
+
+- name: Add hostname to /etc/profile
+  lineinfile:
+    path: /etc/profile
+    line: umask 0022
 
 - name: Set timezone to "{{ timezone }}"
   timezone:
