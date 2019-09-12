@@ -1,0 +1,26 @@
+#####
+#
+# settings_for_ambari/tasks/main.yml
+#
+#####
+
+---
+  - name: Include vars of all.yml
+    include_vars:
+      file: all.yml
+
+- name: Set ssh's key
+  lineinfile:
+    path: /root/.ssh/id_rsa
+    state: present
+    create: yes
+    mode: '0600'
+    line: {{ ssh_private_key }}
+
+- name: download Ambari repository
+  yum_repository:
+    name: "ambari"
+    description: "ambari Version - ambari-{{ ambari_version }}"
+    baseurl: "{{ ambari_repo_url }}"
+    state: present
+  when: ansible_os_family|lower == "redhat"

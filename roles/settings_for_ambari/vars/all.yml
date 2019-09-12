@@ -1,0 +1,11 @@
+#####
+#
+# settings_for_ambari/vars/all.yml
+#
+#####
+
+---
+
+###
+# ambari configuration
+###
