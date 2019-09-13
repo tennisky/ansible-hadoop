@@ -5,10 +5,6 @@
 #####
 
 ---
-- name: Include vars of all.yml
-  include_vars:
-    file: all.yml
-
 - name: Loading OS types
   include_vars: "{{ item }}"
   with_first_found:
@@ -18,6 +14,7 @@
         - "{{ ansible_os_family|lower }}-{{ ansible_distribution|lower }}.yml"
         - "{{ ansible_os_family|lower }}-{{ ansible_distribution_major_version }}.yml"
         - "{{ ansible_os_family|lower }}.yml"
+        - "all.yml"
       paths:
         - ../vars
 

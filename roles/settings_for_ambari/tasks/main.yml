@@ -5,22 +5,51 @@
 #####
 
 ---
-  - name: Include vars of all.yml
-    include_vars:
-      file: all.yml
+- name: Include vars of all.yml
+  include_vars:
+    file: all.yml
+
+- name: Load variables
+  include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_os_family|lower }}-{{ ansible_distribution|lower }}-{{ ansible_distribution_major_version }}.yml"
+        - "{{ ansible_os_family|lower }}-{{ ansible_distribution|lower }}-{{ ansible_distribution_version }}.yml"
+        - "{{ ansible_os_family|lower }}-{{ ansible_distribution|lower }}.yml"
+        - "{{ ansible_os_family|lower }}-{{ ansible_distribution_major_version }}.yml"
+        - "{{ ansible_os_family|lower }}.yml"
+      paths:
+        - ../vars
 
 - name: Set ssh's key
-  lineinfile:
-    path: /root/.ssh/id_rsa
-    state: present
-    create: yes
+  copy:
+    src: /home/centos/.ssh/id_rsa
+    dest: /root/.ssh/id_rsa
+    owner: root
+    group: root
     mode: '0600'
-    line: {{ ssh_private_key }}
+#  lineinfile:
+#    path: /root/.ssh/id_rsa
+#    state: present
+#    create: yes
+#    mode: '0600'
+#    line: {{ ssh_private_key }}
 
 - name: download Ambari repository
   yum_repository:
-    name: "ambari"
+    name: ambari
     description: "ambari Version - ambari-{{ ambari_version }}"
     baseurl: "{{ ambari_repo_url }}"
     state: present
+    gpgcheck: yes
+    gpgkey: "{{ ambari_repo_url }}/RPM-GPG-KEY/RPM-GPG-KEY-Jenkins"
   when: ansible_os_family|lower == "redhat"
+
+- name: Install ambari-server
+  package:
+    name: ambari-server
+    update_cache: yes
+    state: latest
+
+- name: Run ambari setup
+  shell: ambari-server setup --silent

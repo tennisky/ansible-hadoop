@@ -20,6 +20,6 @@ oraclejdk_options:                                        # only used when java 
 # general configuration
 ###
 
-root_password: 'root'
+root_password: root
 swappiness: 1
 timezone: Asia/Tokyo
