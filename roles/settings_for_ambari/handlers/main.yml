@@ -1,0 +1,15 @@
+#####
+#
+# settings_for_ambari/handlers/main.yml
+#
+#####
+
+---
+- name: Run ambari setup
+  shell: ambari-server setup --silent
+
+- name: Set jdbc driver
+  shell: ambari-server setup --jdbc-db=postgres --jdbc-driver=/usr/share/java/postgresql-jdbc.jar
+
+- name: Set Hadoop Classpath
+  shell: export HADOOP_CLASSPATH=${HADOOP_CLASSPATH}:${JAVA_JDBC_LIBS}:/connector jar path

@@ -50,6 +50,18 @@
     name: ambari-server
     update_cache: yes
     state: latest
+  notify:
+    - Run ambari setup
+    - Set jdbc driver
+    - Set Hadoop Classpath
 
-- name: Run ambari setup
-  shell: ambari-server setup --silent
+- name: Make sure the ambari-server service is started
+  service:
+    name: ambari-server
+    state: started
+
+- name: Make sure the ambari-server service is enabled
+  service:
+    name: ambari-server
+    enabled: yes
+  ignore_errors: true
