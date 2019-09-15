@@ -5,6 +5,10 @@
 #####
 
 ---
+- name: Include vars of all.yml
+  include_vars:
+    file: all.yml
+
 - name: Loading OS types
   include_vars: "{{ item }}"
   with_first_found:
