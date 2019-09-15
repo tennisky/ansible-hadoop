@@ -55,13 +55,4 @@
     - Set jdbc driver
     - Set Hadoop Classpath
 
-- name: Make sure the ambari-server service is started
-  service:
-    name: ambari-server
-    state: started
 
-- name: Make sure the ambari-server service is enabled
-  service:
-    name: ambari-server
-    enabled: yes
-  ignore_errors: true
