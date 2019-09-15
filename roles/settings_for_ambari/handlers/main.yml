@@ -13,3 +13,14 @@
 
 - name: Set Hadoop Classpath
   shell: export HADOOP_CLASSPATH=${HADOOP_CLASSPATH}:${JAVA_JDBC_LIBS}:/connector jar path
+
+- name: Make sure the ambari-server service is started
+  service:
+    name: ambari-server
+    state: started
+
+- name: Make sure the ambari-server service is enabled
+  service:
+    name: ambari-server
+    enabled: yes
+  ignore_errors: true
