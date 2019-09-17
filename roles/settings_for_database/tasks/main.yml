@@ -1,0 +1,10 @@
+#####
+#
+# settings_for_database/tasks/main.yml
+#
+#####
+
+---
+- name: Include vars of all.yml
+  include_vars:
+    file: all.yml

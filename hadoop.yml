@@ -5,6 +5,13 @@
 #####
 
 ---
+- name: settings for Linux
+  hosts: all
+  become: yes
+  remote_user: "{{ ssh_remote_user }}"
+  roles:
+    - settings_for_linux
+
 - name: settings for ambari
   hosts: ambari
   become: yes
@@ -12,9 +19,9 @@
   roles:
     - settings_for_ambari
 
-- name: settings for Linux
-  hosts: all
-  become: yes
-  remote_user: "{{ ssh_remote_user }}"
-  roles:
-    - settings_for_linux
+#- name: settings for database
+#  hosts: ambari
+#  become: yes
+#  remote_user: "{{ ssh_remote_user }}"
+#  roles:
+#    - settings_for_database
