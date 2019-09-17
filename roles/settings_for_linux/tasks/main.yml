@@ -134,10 +134,10 @@
   include_tasks: tuned.yml
   when: ansible_os_family|lower == "redhat" and ansible_distribution_major_version|int == 7 and is_vm_docker_containers != "yes"
 
-  - name: Disable selinux
-    selinux:
-      state: disabled
-    notify:
-      - System reboot
-      - Keep waiting for reboot
+- name: Disable selinux
+  selinux:
+    state: disabled
+  notify:
+    - System reboot
+    - Keep waiting for reboot
 #  when: ansible_os_family|lower == "redhat" and ansible_distribution|lower != "amazon" and is_vm_docker_containers != "yes"

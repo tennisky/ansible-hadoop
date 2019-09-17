@@ -24,3 +24,14 @@
     name: ambari-server
     enabled: yes
   ignore_errors: true
+
+- name: postgresql service is enabled
+  service:
+    name: postgresql
+    enabled: yes
+  ignore_errors: true
+
+- name: postgresql service is restarted
+  service:
+    name: postgresql
+    state: restarted

@@ -56,9 +56,12 @@
     - Set Hadoop Classpath
     - Make sure the ambari-server service is started
     - Make sure the ambari-server service is enabled
+    - postgresql service is enabled
 
 - name: change listen_addreseses of postgresql.conf
   replace:
-    path: /etc/ssh/sshd_config
-    regexp: 'listen_addresses='localhost''
-    replace: listen_addresses='*'
+    path: /var/lib/pgsql/data/postgresql.conf
+    regexp: listen_addresses = 'localhost'
+    replace: listen_addresses = '*'
+  notify:
+    - postgresql service is restarted
