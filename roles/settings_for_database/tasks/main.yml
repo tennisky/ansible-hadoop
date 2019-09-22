@@ -27,9 +27,12 @@
     regexp: listen_addresses = 'localhost'
     replace: listen_addresses = '*'
 
-- name: Create db in postgres
-  shell: echo "CREATE DATABASE ranger;" | sudo -u $postgres psql -U postgres
+- name: Create ranger in postgres
+  shell: su - postgres -c "createuser -a -d -U postgres test"
   ignore_errors: true
+  notify:
+    - Create database for ranger
+    - Grant all privileges for ranger
 
 - name: postgresql service is restarted
   service:
