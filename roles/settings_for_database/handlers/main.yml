@@ -10,5 +10,29 @@
   ignore_errors: true
 
 - name: Grant all privileges for ranger
-  shell: sudo -i -u postgres -c sh -c "psql postgres -c 'grant all privileges on database ranger to ranger'"
+  shell: sudo -i -u postgres sh -c "psql postgres -c 'grant all privileges on database ranger to ranger'"
+  ignore_errors: true
+
+- name: Create database for rangerkms
+  shell: su - postgres -c "createdb -O rangerkms rangerkms"
+  ignore_errors: true
+
+- name: Grant all privileges for ranger
+  shell: sudo -i -u postgres sh -c "psql postgres -c 'grant all privileges on database rangerkms to rangerkms'"
+  ignore_errors: true
+
+- name: Create database for hive
+  shell: su - postgres -c "createdb -O hive hive"
+  ignore_errors: true
+
+- name: Grant all privileges for hive
+  shell: sudo -i -u postgres sh -c "psql postgres -c 'grant all privileges on database hive to hive'"
+  ignore_errors: true
+
+- name: Create database for oozie
+  shell: su - postgres -c "createdb -O oozie oozie"
+  ignore_errors: true
+
+- name: Grant all privileges for oozie
+  shell: sudo -i -u postgres sh -c "psql postgres -c 'grant all privileges on database oozie to oozie'"
   ignore_errors: true

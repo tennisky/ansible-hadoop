@@ -5,9 +5,9 @@
 #####
 
 ---
-- name: Include vars of all.yml
-  include_vars:
-    file: all.yml
+#- name: Include vars of all.yml
+#  include_vars:
+#    file: all.yml
 
 - name: postgresql service is enabled
   service:
@@ -28,11 +28,32 @@
     replace: listen_addresses = '*'
 
 - name: Create ranger in postgres
-  shell: su - postgres -c "createuser -a -d -U postgres test"
+  shell: su - postgres -c "createuser -a -d -U postgres ranger"
   ignore_errors: true
   notify:
     - Create database for ranger
     - Grant all privileges for ranger
+
+- name: Create rangerkms in postgres
+  shell: su - postgres -c "createuser -a -d -U postgres rangerkms"
+  ignore_errors: true
+  notify:
+    - Create database for rangerkms
+    - Grant all privileges for rangerkms
+
+- name: Create ranger in postgres
+  shell: su - postgres -c "createuser -a -d -U postgres hive"
+  ignore_errors: true
+  notify:
+    - Create database for hive
+    - Grant all privileges for hive
+
+- name: Create oozie in postgres
+  shell: su - postgres -c "createuser -a -d -U postgres oozie"
+  ignore_errors: true
+  notify:
+    - Create database for oozie
+    - Grant all privileges for oozie
 
 - name: postgresql service is restarted
   service:
