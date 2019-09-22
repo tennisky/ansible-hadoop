@@ -17,7 +17,7 @@
   shell: su - postgres -c "createdb -O rangerkms rangerkms"
   ignore_errors: true
 
-- name: Grant all privileges for ranger
+- name: Grant all privileges for rangerkms
   shell: sudo -i -u postgres sh -c "psql postgres -c 'grant all privileges on database rangerkms to rangerkms'"
   ignore_errors: true
 
