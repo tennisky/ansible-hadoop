@@ -19,9 +19,9 @@
   roles:
     - settings_for_ambari
 
-#- name: settings for database
-#  hosts: ambari
-#  become: yes
-#  remote_user: "{{ ssh_remote_user }}"
-#  roles:
-#    - settings_for_database
+- name: settings for database
+  hosts: ambari
+  become: yes
+  remote_user: "{{ ssh_remote_user }}"
+  roles:
+    - settings_for_database
