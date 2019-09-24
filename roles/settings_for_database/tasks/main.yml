@@ -27,8 +27,12 @@
     regexp: listen_addresses = 'localhost'
     replace: listen_addresses = '*'
 
+#- name: Change password of postgres user
+#  shell: su - postgres -c "psql -U postgres -d postgres -c \"alter user postgres with password 'postgres';\""
+#  ignore_errors: true
+
 - name: Create ranger in postgres
-  shell: su - postgres -c "createuser -a -d -U postgres ranger"
+  shell: su - postgres -c "createuser -a -d -U postgres rangeradmin"
   ignore_errors: true
   notify:
     - Create database for ranger

@@ -6,11 +6,11 @@
 
 ---
 - name: Create database for ranger
-  shell: su - postgres -c "createdb -O ranger ranger"
+  shell: su - postgres -c "createdb -O rangeradmin ranger"
   ignore_errors: true
 
 - name: Grant all privileges for ranger
-  shell: sudo -i -u postgres sh -c "psql postgres -c 'grant all privileges on database ranger to ranger'"
+  shell: sudo -i -u postgres sh -c "psql postgres -c 'grant all privileges on database ranger to rangeradmin'"
   ignore_errors: true
 
 - name: Create database for rangerkms
